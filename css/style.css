@@ -1,0 +1,1138 @@
+/* Portfolio ver.2 - style.css */
+
+/* 색상 : 프로젝트마다 배경색 + 글자색 한 쌍 */
+:root {
+  --ink-dark: #1C1B1A; /* 웜 차콜 */
+  --ink-light: #FFFFFF;
+
+  /* 웹사이트 */
+  --bg-danawa: #61BD14;
+  --ink-danawa: var(--ink-light);
+  --bg-anaider: #3EC6C6;
+  --ink-anaider: var(--ink-dark);
+  --bg-kej: #4ECBA0;
+  --ink-kej: var(--ink-dark);
+  --bg-etc: #C9A227;
+  --ink-etc: var(--ink-dark);
+
+  /* 모바일 */
+  --bg-ikoka: #FF8E8E;
+  --ink-ikoka: var(--ink-dark);
+  --bg-yaksok: #FFDA4F;
+  --ink-yaksok: var(--ink-dark);
+  --bg-haedokje: #A3E635;
+  --ink-haedokje: var(--ink-dark);
+
+  /* 그래픽은 차콜 하나로 고정 */
+  --bg-graphic: #1C1B1A;
+  --ink-graphic: var(--ink-light);
+
+  --bg-about: #8B7CF6;
+  --ink-about: var(--ink-light);
+
+  /* 폰트 */
+  --font-body: "Pretendard Variable", Pretendard, "Noto Sans KR", sans-serif;
+  --font-display: "Anton", "Pretendard Variable", sans-serif;
+}
+
+/* reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink-dark);
+  overflow-x: hidden; /* 가로 스크롤 방지 */
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: #1C1B1A;
+  color: #FFFFFF;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* 화면 전환 : is-current 붙은 화면만 보임 */
+.screen {
+  display: none;
+  width: 100%;
+  height: 100vh;
+}
+
+.screen.is-current {
+  display: block;
+}
+
+/* 홈 아코디언 */
+.accordion {
+  display: flex;
+  height: 100%;
+  background: #F2F2F0;
+}
+
+.panel {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 clamp(32px, 4vw, 64px);
+  overflow: hidden;
+  cursor: pointer;
+  transition:
+    flex .7s cubic-bezier(.33, 1, .68, 1),
+    background-color .45s ease,
+    color .45s ease;
+}
+
+/* 패널마다 대표색 변수만 바꿔치기 */
+.panel-web { --panel-bg: var(--bg-danawa); --panel-ink: var(--ink-danawa); }
+.panel-mobile { --panel-bg: var(--bg-ikoka); --panel-ink: var(--ink-ikoka); }
+.panel-graphic { --panel-bg: var(--bg-graphic); --panel-ink: var(--ink-graphic); }
+.panel-about { --panel-bg: var(--bg-about); --panel-ink: var(--ink-about); }
+
+.panel:hover {
+  flex: 4;
+  background: var(--panel-bg);
+  color: var(--panel-ink);
+}
+
+.panel-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* 번호는 hover하면 배경색이랑 겹쳐서 잉크색으로 바꿈 */
+.panel-num {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 6vw, 80px);
+  font-weight: 400; /* 안톤은 굵기가 하나뿐 */
+  line-height: 1;
+  color: var(--panel-bg);
+  transform-origin: left bottom;
+  transition:
+    color .45s ease,
+    transform .45s cubic-bezier(.34, 1.56, .64, 1); /* 살짝 튕김 */
+}
+
+.panel:hover .panel-num {
+  color: var(--panel-ink);
+  transform: scale(1.12);
+}
+
+.panel-name {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.panel-desc {
+  font-size: 15px;
+  opacity: .65;
+}
+
+.panel-more {
+  margin-top: 8px;
+  padding: 10px 22px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 14px;
+}
+
+/* hover하면 떠오르는 대표작. 오른쪽 아래로 살짝 걸치게 */
+.panel-preview {
+  position: absolute;
+  right: -10%;
+  top: 50%;
+  opacity: 0;
+  transform: translateY(-50%) translateX(24px);
+  transition: opacity .5s ease .15s, transform .5s ease .15s;
+  pointer-events: none;
+}
+
+.panel:hover .panel-preview {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+.panel-preview-wide { width: min(86%, 780px); }
+.panel-preview-phone { width: min(40%, 340px); }
+.panel-preview-square { width: min(60%, 580px); }
+
+/* 기기 목업. 프레임 png 화면 부분이 투명이라
+   스크린샷을 밑에 깔고 프레임을 위에 얹으면 됨 */
+.mockup {
+  position: relative;
+  filter: drop-shadow(0 20px 32px rgba(0, 0, 0, .28)); /* png 모양대로 그림자 */
+}
+
+.mockup-frame {
+  display: block;
+  position: relative;
+  z-index: 1; /* 베젤이 스크린샷 가장자리를 덮음 */
+  width: 100%;
+}
+
+.mockup-screen {
+  position: absolute;
+  z-index: 0;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* 모니터 화면 영역 (png에서 직접 잰 값) */
+.mockup-screen-display {
+  left: 2.4%;
+  top: 3.3%;
+  width: 95.7%;
+  height: 71.3%;
+}
+
+/* 아이폰 화면 영역 */
+.mockup-screen-iphone {
+  left: 4.5%;
+  top: 1.56%;
+  width: 91.4%;
+  height: 96.6%;
+  border-radius: 12% / 5.5%; /* 화면 모서리 곡률 */
+}
+
+/* 그래픽 프리뷰는 누끼 그대로 */
+.panel-preview-square img {
+  width: 100%;
+  height: auto;
+}
+
+/* 픽셀 아바타 */
+.panel-preview-avatar { width: min(18%, 180px); }
+
+.panel-preview-avatar img {
+  width: 100%;
+  image-rendering: pixelated;
+}
+
+/* 캐러셀. 슬라이드가 바뀌면 js가 data-project를 바꿔주고
+   아래 선택자들이 현재 배경/글자색 변수를 갈아끼움 */
+
+#screen-carousel[data-project="danawa"] { --cur-bg: var(--bg-danawa); --cur-ink: var(--ink-danawa); }
+#screen-carousel[data-project="anaider"] { --cur-bg: var(--bg-anaider); --cur-ink: var(--ink-anaider); }
+#screen-carousel[data-project="kej"] { --cur-bg: var(--bg-kej); --cur-ink: var(--ink-kej); }
+#screen-carousel[data-project="etc"] { --cur-bg: var(--bg-etc); --cur-ink: var(--ink-etc); }
+#screen-carousel[data-project="ikoka"] { --cur-bg: var(--bg-ikoka); --cur-ink: var(--ink-ikoka); }
+#screen-carousel[data-project="yaksok"] { --cur-bg: var(--bg-yaksok); --cur-ink: var(--ink-yaksok); }
+#screen-carousel[data-project="haedokje"] { --cur-bg: var(--bg-haedokje); --cur-ink: var(--ink-haedokje); }
+
+/* 그래픽 4종은 모두 웜 차콜 고정 */
+#screen-carousel[data-project="g-edit"],
+#screen-carousel[data-project="g-package"],
+#screen-carousel[data-project="g-banner"],
+#screen-carousel[data-project="g-ai"] { --cur-bg: var(--bg-graphic); --cur-ink: var(--ink-graphic); }
+
+#screen-carousel {
+  position: relative;
+}
+
+/* 배경 레이어. 스와이퍼 밖에 있어야 색이 부드럽게 섞임 */
+.carousel-bg {
+  position: absolute;
+  inset: 0;
+  background-color: var(--cur-bg, #F2F2F0);
+  transition: background-color .6s ease;
+}
+
+/* 상단 네비. 1단 = 카테고리(최상위), 2단 = 프로젝트명(하위) */
+.carousel-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px clamp(32px, 4vw, 64px);
+  color: var(--cur-ink, var(--ink-dark));
+  transition: color .6s ease;
+}
+
+.carousel-nav-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.carousel-nav-home {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: .05em;
+}
+
+/* 최상위 카테고리 */
+.cat-nav {
+  display: flex;
+  gap: 32px;
+}
+
+.cat-nav-item {
+  font-size: 18px;
+  font-weight: 500;
+  opacity: .55;
+  transition: opacity .3s ease;
+}
+
+.cat-nav-item:hover { opacity: .85; }
+
+.cat-nav-item.is-active {
+  opacity: 1;
+  font-weight: 700;
+}
+
+/* 하위 프로젝트명. 카테고리 아래에 오른쪽 정렬로 붙음 */
+.carousel-nav-list {
+  display: flex;
+  justify-content: flex-end;
+  gap: 22px;
+}
+
+.carousel-nav-item {
+  font-size: 16px;
+  opacity: .5;
+  transition: opacity .3s ease;
+}
+
+.carousel-nav-item:hover { opacity: .8; }
+
+.carousel-nav-item.is-active {
+  opacity: 1;
+  font-weight: 700;
+}
+
+/* 스와이퍼 본체 */
+#carousel-swiper {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+}
+
+/* 슬라이드 내부 레이아웃 */
+.slide {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cur-ink, var(--ink-dark));
+  transition: color .6s ease;
+}
+
+/* 대형 타이포. 히어로 뒤에 깔림 */
+.slide-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 0;
+  font-family: var(--font-display);
+  font-size: clamp(96px, 17vw, 280px);
+  font-weight: 400;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* 슬라이드 등장 모션. 타이포 - 히어로 - 정보 순서로 딜레이.
+   베지어 1.56 덕분에 살짝 튕기면서 올라옴 */
+.slide-title {
+  opacity: 0;
+  transform: translate(-50%, calc(-50% + 56px));
+  transition: opacity .6s ease, transform .7s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.slide-hero,
+.slide-info {
+  opacity: 0;
+  transform: translateY(48px);
+  transition: opacity .6s ease, transform .7s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.swiper-slide.is-active .slide-title {
+  opacity: .22;
+  transform: translate(-50%, -50%);
+  transition-delay: 0s;
+}
+
+.swiper-slide.is-active .slide-hero {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: .14s;
+}
+
+.swiper-slide.is-active .slide-info {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: .28s;
+}
+
+.slide-hero {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+.slide-hero-display { width: min(54%, 800px); }
+.slide-hero-phone { width: min(20%, 280px); }
+/* 낮은 화면에선 아래 설명글이랑 겹쳐서 92vh로 한 번 더 제한 */
+.slide-hero-tablet { width: min(58%, 900px, 92vh); }
+
+/* 모니터 옆 모바일 목업 (반응형 어필용) */
+.mockup-mobile-companion {
+  position: absolute;
+  right: -30%;
+  bottom: -10%;
+  z-index: 2;
+  width: 58%;
+  height: auto;
+  filter: drop-shadow(-8px 12px 32px rgba(0, 0, 0, .3));
+  pointer-events: none;
+}
+
+/* 그래픽: 프레임 없이 이미지 그대로 */
+.slide-hero-plain {
+  max-width: min(58%, 860px);
+  max-height: 56vh;
+  object-fit: contain;
+  filter: drop-shadow(0 24px 48px rgba(0, 0, 0, .25));
+}
+
+/* 캐러셀용 목업 화면 영역. 긴 캡처를 넣어야 해서 overflow hidden */
+.mockup-viewport {
+  position: absolute;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.mockup-viewport-display {
+  left: 2.4%;
+  top: 1.7%;
+  width: 95.7%;
+  height: 72.4%;
+}
+
+/* 아이패드 스크린 구멍 위치 (원본 1183x878 기준 실측값) */
+.mockup-viewport-tablet {
+  left: 7.2%;
+  top: 9.7%;
+  width: 85.6%;
+  height: 80.6%;
+  border-radius: 2% / 2.8%;
+}
+
+.mockup-viewport-iphone {
+  left: 4.5%;
+  top: 0.8%; /* 위 갭 보정 */
+  width: 91.4%;
+  height: 97.8%;
+  border-radius: 12% / 5.5%;
+}
+
+.mockup-page {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0%;
+}
+
+/* 폰 화면 여러 장 겹쳐두고 is-shown 한 장만 보임 */
+.mockup-page-flip {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+
+.mockup-page-flip.is-shown {
+  opacity: 1;
+}
+
+/* 편집 디자인 태블릿 미니 캐러셀. 페이지들을 가로로 이어붙이고 트랙을 통째로 밈 */
+.tablet-track {
+  display: flex;
+  height: 100%;
+  transition: transform .55s cubic-bezier(.33, 1, .68, 1);
+  cursor: zoom-in;
+}
+
+/* 베젤 프레임이 화면 위를 덮고 있어서 클릭이 막힘 -> 프레임은 클릭 통과 */
+.slide-hero-tablet .mockup-frame {
+  pointer-events: none;
+}
+
+.tablet-page {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 휠 안내(마우스 아이콘) + 카운터. 우측 하단 큰 화살표/우측 도트랑 안 겹치게 목업 바로 아래 중앙 */
+.tablet-controls {
+  position: absolute;
+  left: 50%;
+  bottom: -48px;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 첫 화면 SCROLL 안내랑 같은 아이콘인데 여긴 좀 작게 (안의 휠 점까지 같이 줄어들게 scale) */
+.tablet-controls .scroll-hint-mouse {
+  transform: scale(.75);
+}
+
+/* 자릿수 바뀌어도 안 흔들리게 고정폭 숫자 */
+.tablet-count {
+  min-width: 58px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* hover하면 긴 페이지가 아래로 쭉 내려감 (object-position top -> bottom) */
+.mockup-page-scroll {
+  transition: object-position 7s ease-in-out;
+}
+
+.mockup:hover .mockup-page-scroll {
+  object-position: 50% 100%;
+}
+
+/* 그래픽 슬라이드 */
+
+/* 여러 장 나란히 (편집 · 패키지) */
+.slide-hero-gallery {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, 2vw, 32px);
+  width: min(82%, 1200px);
+}
+
+/* 직계 img만! 안쪽 폰 목업 이미지까지 걸리면 안 됨 */
+.slide-hero-gallery > img {
+  min-width: 0;
+  max-width: 30%;
+  max-height: 52vh;
+  object-fit: contain;
+  filter: drop-shadow(0 16px 32px rgba(0, 0, 0, .35));
+}
+
+/* 그리드 콜라주 (AI 생성물) */
+.slide-hero-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  width: min(68%, 920px);
+}
+
+.slide-hero-grid img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* 배너 무한 마퀴. 줄마다 반대로 흐름 */
+.slide-hero-marquee {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  overflow: hidden;
+}
+
+.marquee {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: max-content;
+  animation: marquee-flow 36s linear infinite;
+}
+
+.marquee-reverse {
+  animation-direction: reverse;
+}
+
+/* 이미지를 2세트 이어붙여서 -50%가 딱 한 세트 = 무한 반복 */
+@keyframes marquee-flow {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marquee img {
+  height: 150px;
+  border-radius: 10px;
+}
+
+/* 두 번째 줄(세로 배너)은 더 크게 */
+.marquee-reverse img {
+  height: 280px;
+}
+
+/* 그외: 모니터 두 대 나란히 */
+.slide-hero-duo {
+  display: flex;
+  gap: 4%;
+  width: min(74%, 1060px);
+}
+
+.slide-hero-duo .mockup {
+  flex: 1;
+  min-width: 0;
+}
+
+/* 모니터 2대짜리는 작게 나와서 위 갭 보정 */
+.slide-hero-duo .mockup-viewport-display {
+  top: 2.5%;
+  height: 72.1%;
+}
+
+/* 갤러리 안의 상세페이지 폰 목업 */
+.slide-hero-gallery .mockup {
+  flex: 0 0 auto;
+  width: clamp(170px, 18vw, 250px);
+  cursor: zoom-in;
+}
+
+
+/* 약쏙 화면 캡처는 iPhone 16 규격이라(나머지는 14) 위로 4px 보정 */
+.swiper-slide[data-project="yaksok"] .mockup-page-flip {
+  object-position: 50% -4px;
+}
+
+/* 클릭 확대 가능 표시 */
+.slide-hero-gallery img,
+.slide-hero-grid img,
+.marquee img {
+  cursor: zoom-in;
+}
+
+/* hover하면 멈춤 (클릭용) */
+.marquee:hover {
+  animation-play-state: paused;
+}
+
+/* 좌우 화살표 */
+.carousel-arrows {
+  position: absolute;
+  right: clamp(32px, 4vw, 64px);
+  bottom: 4vh;
+  z-index: 10;
+  display: flex;
+  gap: 10px;
+  color: var(--cur-ink, var(--ink-dark));
+  transition: color .6s ease;
+}
+
+.carousel-arrow {
+  width: 44px;
+  height: 44px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color .25s ease, opacity .3s ease;
+}
+
+.carousel-arrow:hover {
+  background: rgba(255, 255, 255, .18);
+}
+
+/* 끝에 닿으면 흐리게 */
+.carousel-arrow.is-disabled {
+  opacity: .25;
+  pointer-events: none;
+}
+
+/* 라이트박스 */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20, 19, 18, .88);
+}
+
+.lightbox.is-open {
+  display: flex;
+  animation: lightbox-fade .3s ease;
+}
+
+/* 열릴 때 배경 페이드 + 이미지 팝 */
+@keyframes lightbox-fade {
+  from { background: rgba(20, 19, 18, 0); }
+}
+
+.lightbox.is-open .lightbox-scroll {
+  animation: lightbox-in .4s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+@keyframes lightbox-in {
+  from {
+    opacity: 0;
+    transform: scale(.94) translateY(16px);
+  }
+}
+
+/* 긴 이미지는 안에서 스크롤 */
+.lightbox-scroll {
+  max-width: 92vw;
+  max-height: 90vh;
+  overflow: auto;
+  border-radius: 8px;
+}
+
+.lightbox-img {
+  display: block;
+  max-width: 92vw;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 32px;
+  font-size: 40px;
+  line-height: 1;
+  color: #fff;
+  opacity: .8;
+}
+
+.lightbox-close:hover {
+  opacity: 1;
+}
+
+.slide-info {
+  position: absolute;
+  left: clamp(32px, 4vw, 64px);
+  bottom: 7vh;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.slide-name {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+/* 3줄 소개 */
+.slide-story {
+  max-width: 440px;
+  font-size: 14px;
+  line-height: 1.7;
+  opacity: .85;
+}
+
+/* 메타 정보 */
+.slide-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 4px;
+}
+
+.slide-tools {
+  display: flex;
+  gap: 6px;
+}
+
+.slide-tool {
+  width: 26px;
+  height: 26px;
+  padding: 4px;
+  background: rgba(255, 255, 255, .85); /* 아이콘 잘 보이게 흰 칩 */
+  border-radius: 7px;
+  object-fit: contain;
+}
+
+.slide-fact {
+  font-size: 13px;
+  opacity: .75;
+}
+
+/* 팩트 항목 사이 구분점 */
+.slide-fact + .slide-fact::before {
+  content: '·';
+  margin-right: 14px;
+  opacity: .5;
+}
+
+.slide-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.slide-cta {
+  padding: 10px 22px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 14px;
+  transition: background-color .25s ease;
+}
+
+.slide-cta:hover {
+  background: rgba(255, 255, 255, .18);
+}
+
+/* 우측 슬라이드 도트. 평소엔 점만 보이고 hover하면 프로젝트명 */
+.quick-nav {
+  position: absolute;
+  right: clamp(20px, 2.5vw, 40px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  color: var(--cur-ink, var(--ink-dark));
+  transition: color .6s ease;
+}
+
+.quick-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.quick-nav-dot {
+  width: 9px;
+  height: 9px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  opacity: .55;
+  transition: opacity .3s ease, background-color .3s ease;
+}
+
+/* 현재 카테고리: 점을 채움 */
+.quick-nav-item.is-active .quick-nav-dot {
+  background: currentColor;
+  opacity: 1;
+}
+
+.quick-nav-label {
+  font-size: 13px;
+  opacity: 0;
+  transform: translateX(6px);
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+.quick-nav-item:hover .quick-nav-dot { opacity: 1; }
+
+.quick-nav-item:hover .quick-nav-label {
+  opacity: .9;
+  transform: translateX(0);
+}
+
+/* 스크롤 안내. 마우스 아이콘은 css로 그림 (테두리 = 몸통, before = 휠) */
+.scroll-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 4vh;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--cur-ink, var(--ink-dark));
+  opacity: 0;
+  transition: opacity .5s ease, color .6s ease;
+  pointer-events: none;
+}
+
+/* 첫 슬라이드에서만 */
+#screen-carousel.is-first-slide .scroll-hint {
+  opacity: .8;
+}
+
+/* 편집 디자인 슬라이드는 태블릿 컨트롤이 있어서 스크롤 안내 생략 */
+#screen-carousel[data-project="g-edit"] .scroll-hint {
+  opacity: 0;
+}
+
+.scroll-hint-mouse {
+  position: relative;
+  width: 22px;
+  height: 34px;
+  border: 2px solid currentColor;
+  border-radius: 12px;
+}
+
+.scroll-hint-mouse::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 6px;
+  width: 4px;
+  height: 7px;
+  margin-left: -2px;
+  border-radius: 2px;
+  background: currentColor;
+  animation: wheel-roll 1.6s ease-in-out infinite;
+}
+
+@keyframes wheel-roll {
+  0%   { transform: translateY(0);    opacity: 1; }
+  60%  { transform: translateY(12px); opacity: 0; }
+  100% { transform: translateY(0);    opacity: 0; }
+}
+
+.scroll-hint-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .22em;
+}
+
+/* 폰 hover 안내. 5초 깜빡이고 알아서 사라짐 */
+.hover-hint {
+  position: absolute;
+  left: 50%;
+  bottom: -44px;
+  transform: translateX(-50%);
+  z-index: 2;
+  padding: 6px 16px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.swiper-slide.is-active .hover-hint {
+  animation: hint-blink 5s ease forwards;
+}
+
+@keyframes hint-blink {
+  0%, 20%, 40%, 60%      { opacity: .9; }
+  10%, 30%, 50%, 70%     { opacity: .25; }
+  85%, 100%              { opacity: 0; }
+}
+
+/* hover 중엔 숨김 */
+.slide-hero-phone:hover .hover-hint {
+  animation: none;
+  opacity: 0;
+}
+
+/* About */
+#screen-about {
+  position: relative;
+  background: var(--bg-about);
+  color: var(--ink-about);
+}
+
+.about {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* is-entered 붙으면 타이포 -> 카드 순서로 등장 */
+.about-bigtype {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, calc(-50% + 56px));
+  font-family: var(--font-display);
+  font-size: clamp(120px, 20vw, 320px);
+  font-weight: 400;
+  letter-spacing: .04em;
+  opacity: 0;
+  user-select: none;
+  white-space: nowrap;
+  transition: opacity .6s ease, transform .7s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+#screen-about.is-entered .about-bigtype {
+  opacity: .16;
+  transform: translate(-50%, -50%);
+}
+
+.about-card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  max-width: 640px;
+  padding: 0 24px;
+  opacity: 0;
+  transform: translateY(48px);
+  transition: opacity .6s ease .15s, transform .7s cubic-bezier(.34, 1.56, .64, 1) .15s;
+}
+
+#screen-about.is-entered .about-card {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-avatar {
+  width: 96px;
+  image-rendering: pixelated;
+}
+
+.about-name {
+  font-size: 34px;
+  font-weight: 800;
+}
+
+.about-tagline {
+  font-size: 15px;
+  opacity: .8;
+}
+
+.about-intro {
+  margin-top: 8px;
+  font-size: 15px;
+  line-height: 1.8;
+  opacity: .92;
+}
+
+.about-facts {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 48px;
+  text-align: left;
+}
+
+.about-fact dt {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  opacity: .65;
+  margin-bottom: 6px;
+}
+
+.about-fact dd {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* 다루는 도구 - 팩트 그리드 전체 폭 차지, 이력/거주지 아래 라인에 맞춤 */
+.about-tools {
+  grid-column: 1 / -1;
+  margin-top: 2px;
+}
+
+/* 아이콘은 한 줄로 (두 줄이면 카드가 길어져서 낮은 화면에서 푸터랑 겹침) */
+.about-tools-list {
+  margin-top: 2px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.about-tool {
+  width: 32px;
+  height: 32px;
+  padding: 5px;
+  background: rgba(255, 255, 255, .45); /* 은은한 칩 */
+  border-radius: 8px;
+  object-fit: contain;
+  /* 평소엔 무채색으로 톤다운, hover 시 원래 컬러가 살아남 */
+  filter: grayscale(1);
+  opacity: .5;
+  transition: filter .25s ease, opacity .25s ease, transform .2s ease;
+}
+
+.about-tool:hover {
+  filter: grayscale(0);
+  opacity: 1;
+  transform: translateY(-3px);
+}
+
+/* about 맨 아래 저작권 푸터 - 가로 100%, 한 줄 안에서 space-between */
+.about-footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 12px 40px;
+  background: #D6D0FF;
+  color: #222;
+  /* 위쪽에 살짝 진한 보라 라인으로 about 본문이랑 구분 */
+  border-top: 2px solid #8B7CF6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.about-footer-left {
+  font-weight: 700;
+  letter-spacing: .01em;
+}
+
+/* 이름과 이메일 사이 점만 살짝 연하게 */
+.about-footer-dot {
+  opacity: .45;
+}
+
+.about-footer-right {
+  opacity: .8;
+}
+
+/* 저작권 표기는 조금 더 옅게 뒤로 물림 */
+.about-footer-copy {
+  margin-left: 4px;
+  opacity: .55;
+}
