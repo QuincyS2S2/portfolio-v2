@@ -59,11 +59,11 @@ window.addEventListener('popstate', function (e) {
 // 첫 화면(홈) 기록
 try { history.replaceState({ screen: 'home' }, ''); } catch (err) { }
 
-// graphics_page-0001.jpg ~ 00NN.jpg 처럼 번호가 규칙적이라 반복문으로 경로 생성
+// 01.png ~ NN.png 처럼 번호가 규칙적이라 반복문으로 경로 생성
 function pageList(prefix, count) {
   var list = [];
   for (var i = 1; i <= count; i++) {
-    list.push(prefix + String(i).padStart(4, '0') + '.jpg');
+    list.push(prefix + String(i).padStart(2, '0') + '.png');
   }
   return list;
 }
@@ -73,15 +73,16 @@ function pageList(prefix, count) {
 const CATEGORIES = {
   web: [
     {
-      id: 'danawa', name: '다나와 리디자인', title: 'DANAWA',
-      story: '최저가 가격 비교 및 판매에 중점을 둔 기존의 다나와 사이트를 리디자인했습니다. 광고로 시선이 분산되는 레이아웃을 개선하고자 카테고리를 시각적으로 재분류하고, 단순 쇼핑몰을 넘어 커뮤니티의 장으로 기능하도록 구성했습니다. 디자인부터 퍼블리싱까지 직접 진행했습니다.',
+      // name은 슬라이드 제목, navName은 상단 네비/도트용 짧은 이름
+      id: 'danawa', name: '[반응형] 다나와 리디자인 퍼블리싱', navName: '다나와 리디자인', title: 'DANAWA',
+      story: '최저가 가격 비교 및 판매에 중점을 둔 기존의 다나와 사이트를 리디자인했습니다. 광고로 시선이 분산되는 레이아웃을 개선하고자 카테고리를 시각적으로 재분류하고, 단순 쇼핑몰을 넘어 커뮤니티의 장으로 기능하도록 구성했습니다. 전 화면을 반응형 웹으로 직접 퍼블리싱했습니다.',
       img: 'img/Work-Image/danawa/damawa main.png',
       mobileImg: 'img/Work-Image/danawa/mobile-mokup-2.png',
       mock: 'display',
       live: 'https://quincys2s2.github.io/DANAWA-re/',
       tools: ['html', 'css', 'js', 'github', 'figma'],
       duration: '7일',
-      contribution: '개인 작업 · 디자인 & 퍼블리싱',
+      contribution: '개인 작업 · 퍼블리싱',
       links: [
         { label: '사이트로 이동', url: 'https://quincys2s2.github.io/DANAWA-re/' },
         { label: 'GitHub', url: 'https://github.com/QuincyS2S2/DANAWA-re' },
@@ -89,14 +90,14 @@ const CATEGORIES = {
       ]
     },
     {
-      id: 'anaider', name: '애나이더 수족관', title: 'ANAIDER',
-      story: '아쿠아리움 특유의 조명 빛이 감도는 어두운 공간 분위기를 살려 진행했습니다. 개장 전이라 부족했던 이미지 자료는 어도비 파이어플라이(Firefly)로 직접 생성해 사용했고, 디자인부터 퍼블리싱까지 빠르게 완성했습니다.',
+      id: 'anaider', name: '[반응형] 애나이더 수족관 퍼블리싱', navName: '애나이더 수족관', title: 'ANAIDER',
+      story: '아쿠아리움 특유의 조명 빛이 감도는 어두운 공간 분위기를 살려 진행했습니다. 개장 전이라 부족했던 이미지 자료는 어도비 파이어플라이(Firefly)로 직접 생성해 사용했고, 반응형 웹으로 빠르게 퍼블리싱을 완성했습니다.',
       img: 'img/Work-Image/Anaider-Aquarium/Anaider-Aquarium main.png',
       mock: 'display',
       live: 'https://quincys2s2.github.io/Anaider-Aquarium/',
       tools: ['html', 'css', 'js', 'github', 'figma', 'gemini'],
       duration: '6시간 30분',
-      contribution: '개인 작업 · 디자인 & 퍼블리싱',
+      contribution: '개인 작업 · 퍼블리싱',
       links: [
         { label: '사이트로 이동', url: 'https://quincys2s2.github.io/Anaider-Aquarium/' },
         { label: 'GitHub', url: 'https://github.com/QuincyS2S2/Anaider-Aquarium' },
@@ -104,14 +105,14 @@ const CATEGORIES = {
       ]
     },
     {
-      id: 'kej', name: 'KEJ', title: 'KEEP EVERY JOY',
-      story: "이름의 약자를 딴 AI 다이어리 앱 'KEJ'의 브랜드/다운로드 사이트입니다. 대화와 GPS 기반의 일상 기록, SNS 연동 기능을 담았고 커스터마이징 가능한 마스코트 캐릭터를 제작했습니다. 다이어리 감성에 맞춰 블랙 톤으로 디자인하고 직접 퍼블리싱했습니다.",
+      id: 'kej', name: '[반응형] KEJ 퍼블리싱', navName: 'KEJ', title: 'KEEP EVERY JOY',
+      story: "이름의 약자를 딴 AI 다이어리 앱 'KEJ'의 브랜드/다운로드 사이트입니다. 대화와 GPS 기반의 일상 기록, SNS 연동 기능을 담았고 커스터마이징 가능한 마스코트 캐릭터를 제작했습니다. 다이어리 감성에 맞춘 블랙 톤 화면 전체를 반응형으로 직접 퍼블리싱했습니다.",
       img: 'img/Work-Image/KEJ/KEJ main.png',
       mock: 'display',
       live: 'https://quincys2s2.github.io/KEJ/KEJ.html',
       tools: ['html', 'css', 'js', 'github', 'figma'],
       duration: '9일',
-      contribution: '개인 작업 · 디자인 & 퍼블리싱',
+      contribution: '개인 작업 · 퍼블리싱',
       links: [
         { label: '사이트로 이동', url: 'https://quincys2s2.github.io/KEJ/KEJ.html' },
         { label: 'GitHub', url: 'https://github.com/QuincyS2S2/KEJ' },
@@ -119,7 +120,7 @@ const CATEGORIES = {
       ]
     },
     {
-      id: 'etc', name: '그외 작업', title: '& MORE',
+      id: 'etc', name: '스타벅스 · 한국장학재단 리디자인', navName: '리디자인', title: 'REDESIGN',
       story: '스타벅스는 브랜드 무드를 살린 UI 리디자인, 한국장학재단은 신뢰감을 주는 웹사이트 리디자인으로 진행했습니다. 두 작업 모두 퍼블리싱 없이 디자인 중심으로 진행했습니다.',
       mock: 'duo',
       imgs: [
@@ -138,8 +139,8 @@ const CATEGORIES = {
   ],
   mobile: [
     {
-      id: 'ikoka', name: 'IKOKA', title: 'IKOKA',
-      story: '일본어를 몰라도 AI 가이드의 도움을 받아 일정, 커뮤니티, 환전까지 이용할 수 있는 일본 전문 여행 어플리케이션입니다. 가독성을 최우선으로 디자인했고, 사용자 성향에 따라 동선을 짜주는 AI 캐릭터를 이미지 생성 모델로 구현했습니다. 전 화면을 직접 퍼블리싱했습니다.',
+      id: 'ikoka', name: 'IKOKA 모바일 퍼블리싱', navName: 'IKOKA', title: 'IKOKA',
+      story: '일본어를 몰라도 AI 가이드의 도움을 받아 일정, 커뮤니티, 환전까지 이용할 수 있는 일본 전문 여행 어플리케이션입니다. 가독성을 최우선으로 디자인했고, 사용자 성향에 따라 동선을 짜주는 AI 캐릭터를 이미지 생성 모델로 구현했습니다.',
       img: 'img/Work-Image/ikoka/01.png',
       // hover하면 이 순서로 넘어감
       screens: [
@@ -154,7 +155,7 @@ const CATEGORIES = {
       live: 'https://quincys2s2.github.io/ikoka/',
       tools: ['html', 'css', 'js', 'github', 'figma', 'claude'],
       duration: '9일',
-      contribution: '개인 작업 · 디자인 & 퍼블리싱',
+      contribution: '개인 작업 · 퍼블리싱',
       links: [
         { label: '사이트로 이동', url: 'https://quincys2s2.github.io/ikoka/' },
         { label: 'GitHub', url: 'https://github.com/QuincyS2S2/ikoka' },
@@ -179,7 +180,7 @@ const CATEGORIES = {
       live: null,
       tools: ['figma'],
       duration: '20일',
-      contribution: '팀(2인) · 기여도 80%',
+      contribution: '팀(2인) · 기여도 80% (발표 및 조합 메뉴, 커뮤니티 · 쇼핑 메뉴 일부 담당)',
       links: [
         { label: '피그마 프로토타입', url: 'https://www.figma.com/proto/IiDOrnzGCNRlJDXswMODk6/%EC%95%BD%EC%8F%99?node-id=0-1&t=Vc7gw926k8Pd7yUs-1' },
         { label: '기획서 PDF', url: 'pdf/yacksok-plan.pdf' }
@@ -213,10 +214,10 @@ const CATEGORIES = {
   graphic: [
     {
       id: 'g-edit', name: '편집 디자인', title: 'EDITORIAL',
-      story: '편집 디자인으로 진행한 결과물입니다. 책의 표지 및 내지, 제품 패키지를 제작했습니다. 태블릿 위에서 휠을 굴리면 페이지가 넘어가고, 화면을 클릭하면 크게 볼 수 있습니다.',
+      story: '편집 디자인으로 진행한 결과물입니다. 책의 표지 및 내지, 제품 패키지를 제작했습니다. 화면을 클릭하면 크게 볼 수 있습니다.',
       mock: 'tablet',
-      // 그래픽 PDF 전체 32장을 페이지별 이미지로
-      screens: pageList('img/Work-Image/Graphics-pin/all/graphics_page-', 32),
+      // 피그마로 재작업한 주요 11장 (2026-07-14, 3:2 가로 규격)
+      screens: pageList('img/Work-Image/Graphics-pin/new/', 11),
       links: [
         { label: '전체 PDF 보기', url: 'pdf/sub-add/graphics.pdf' }
       ]
@@ -261,6 +262,15 @@ const CATEGORIES = {
       live: null
     },
     {
+      id: 'g-video', name: '영상 편집', title: 'VIDEO',
+      story: 'AI 생성 소스를 직접 편집해 완성한 영상 작업입니다. 오른쪽 썸네일을 클릭하면 유튜브 영상이 재생됩니다.',
+      mock: 'video',
+      video: 'img/video/ai video.mp4',
+      // 유튜브는 클릭하면 그 자리에서 iframe으로 바뀌어 재생됨
+      youtube: ['JSoDJxQpp5s', 'LdQsBGDYrRA'],
+      live: null
+    },
+    {
       id: 'g-ai', name: 'AI 생성물', title: 'AI WORKS',
       story: 'AI를 활용한 이미지 · 캐릭터 생성 작업 모음입니다.',
       mock: 'grid',
@@ -278,6 +288,14 @@ const CATEGORIES = {
     }
   ]
 };
+
+// 유튜브 썸네일 마크업. 이미지는 유튜브가 자동으로 제공하는 걸 그대로 씀
+function ytThumbHTML(id) {
+  return (
+    '<img src="https://img.youtube.com/vi/' + id + '/hqdefault.jpg" alt="유튜브 영상 썸네일">' +
+    '<span class="yt-play" aria-hidden="true">&#9654;</span>'
+  );
+}
 
 // 모니터 목업 한 대 분량 마크업
 function displayInner(src, alt) {
@@ -312,6 +330,25 @@ function heroHTML(p) {
           '<span class="scroll-hint-mouse" aria-hidden="true"></span>' +
           '<span class="tablet-count"><span class="tablet-count-now">1</span> / ' + p.screens.length + '</span>' +
         '</div>' +
+      '</div>'
+    );
+  }
+
+  // 영상. mp4는 슬라이드가 보일 때만 재생 (syncProjectColor에서 제어)
+  if (p.mock === 'video') {
+    var side = '';
+    if (p.youtube) {
+      side =
+        '<div class="video-side">' +
+          p.youtube.map(function (id) {
+            return '<button type="button" class="yt-thumb" data-yt="' + id + '">' + ytThumbHTML(id) + '</button>';
+          }).join('') +
+        '</div>';
+    }
+    return (
+      '<div class="slide-hero slide-hero-video">' +
+        '<video class="slide-video" src="' + p.video + '" controls muted loop playsinline preload="metadata"></video>' +
+        side +
       '</div>'
     );
   }
@@ -457,16 +494,16 @@ function enterCategory(category, fromHistory) {
     );
   }).join('');
 
-  // 상단 2단 : 현재 카테고리의 프로젝트명 목록
+  // 상단 2단 : 현재 카테고리의 프로젝트명 목록 (네비엔 짧은 이름 우선)
   document.getElementById('carousel-nav-list').innerHTML = projects.map(function (p, i) {
-    return '<button type="button" class="carousel-nav-item" data-index="' + i + '">' + p.name + '</button>';
+    return '<button type="button" class="carousel-nav-item" data-index="' + i + '">' + (p.navName || p.name) + '</button>';
   }).join('');
 
   // 우측 도트 : 슬라이드 개수만큼 생성 (hover하면 프로젝트명)
   document.getElementById('quick-nav').innerHTML = projects.map(function (p, i) {
     return (
       '<button type="button" class="quick-nav-item" data-index="' + i + '">' +
-        '<span class="quick-nav-label">' + p.name + '</span><span class="quick-nav-dot"></span>' +
+        '<span class="quick-nav-label">' + (p.navName || p.name) + '</span><span class="quick-nav-dot"></span>' +
       '</button>'
     );
   }).join('');
@@ -605,6 +642,17 @@ function closeLightbox(fromHistory) {
   if (!fromHistory) { try { history.back(); } catch (err) { } }
 }
 
+// 유튜브 썸네일 클릭 -> 그 자리에서 iframe으로 교체해 재생 (이벤트 위임)
+document.getElementById('carousel-wrapper').addEventListener('click', function (e) {
+  var btn = e.target.closest('.yt-thumb');
+  if (!btn || btn.querySelector('iframe')) return;
+  // referrerpolicy : 유튜브가 출처(Referer) 없는 임베드를 오류 153으로 거부해서 명시
+  btn.innerHTML =
+    '<iframe src="https://www.youtube.com/embed/' + btn.dataset.yt + '?autoplay=1&rel=0"' +
+    ' title="유튜브 영상" allow="autoplay; encrypted-media; fullscreen" allowfullscreen' +
+    ' referrerpolicy="strict-origin-when-cross-origin"></iframe>';
+});
+
 // 그래픽 이미지 클릭 -> 라이트박스 (이벤트 위임)
 document.getElementById('carousel-wrapper').addEventListener('click', function (e) {
   var img = e.target.closest('.slide-hero-gallery img, .slide-hero-grid img, .marquee img');
@@ -665,9 +713,21 @@ function syncProjectColor(swiper) {
     btn.classList.toggle('is-active', Number(btn.dataset.index) === swiper.activeIndex);
   });
 
-  // 등장 모션 트리거
+  // 등장 모션 트리거 + 영상은 보이는 슬라이드에서만 재생
   swiper.slides.forEach(function (slide, i) {
     slide.classList.toggle('is-active', i === swiper.activeIndex);
+    var video = slide.querySelector('video');
+    if (video) {
+      if (i === swiper.activeIndex) video.play().catch(function () { });
+      else video.pause();
+    }
+    // 떠난 슬라이드에서 재생 중이던 유튜브는 썸네일로 되돌림 (정지 효과)
+    if (i !== swiper.activeIndex) {
+      slide.querySelectorAll('.yt-thumb iframe').forEach(function (iframe) {
+        var btn = iframe.closest('.yt-thumb');
+        btn.innerHTML = ytThumbHTML(btn.dataset.yt);
+      });
+    }
   });
 
   // 스크롤 안내는 첫 슬라이드에서만
