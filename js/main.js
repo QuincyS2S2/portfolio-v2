@@ -75,7 +75,7 @@ const CATEGORIES = {
     {
       // name은 슬라이드 제목, navName은 상단 네비/도트용 짧은 이름
       id: 'danawa', name: '[반응형] 다나와 리디자인 퍼블리싱', navName: '다나와 리디자인', title: 'DANAWA',
-      story: '최저가 가격 비교 및 판매에 중점을 둔 기존의 다나와 사이트를 리디자인했습니다. 광고로 시선이 분산되는 레이아웃을 개선하고자 카테고리를 시각적으로 재분류하고, 단순 쇼핑몰을 넘어 커뮤니티의 장으로 기능하도록 구성했습니다. 전 화면을 반응형 웹으로 직접 퍼블리싱했습니다.',
+      story: '최저가 가격 비교 및 판매에 중점을 둔 기존의 다나와 사이트를 리디자인했습니다. 광고로 시선이 분산되는 레이아웃을 개선하고자 카테고리를 시각적으로 재분류하고, 단순 쇼핑몰을 넘어 커뮤니티의 장으로 기능하도록 구성했습니다.',
       img: 'img/Work-Image/danawa/damawa main.png',
       mobileImg: 'img/Work-Image/danawa/mobile-mokup-2.png',
       mock: 'display',
@@ -91,7 +91,7 @@ const CATEGORIES = {
     },
     {
       id: 'anaider', name: '[반응형] 애나이더 수족관 퍼블리싱', navName: '애나이더 수족관', title: 'ANAIDER',
-      story: '아쿠아리움 특유의 조명 빛이 감도는 어두운 공간 분위기를 살려 진행했습니다. 개장 전이라 부족했던 이미지 자료는 어도비 파이어플라이(Firefly)로 직접 생성해 사용했고, 반응형 웹으로 빠르게 퍼블리싱을 완성했습니다.',
+      story: '아쿠아리움 특유의 조명 빛이 감도는 어두운 공간 분위기를 살려 진행했습니다. 개장 전이라 부족했던 이미지 자료는 어도비 파이어플라이(Firefly)로 직접 생성해 사용했습니다.',
       img: 'img/Work-Image/Anaider-Aquarium/Anaider-Aquarium main.png',
       mock: 'display',
       live: 'https://quincys2s2.github.io/Anaider-Aquarium/',
@@ -106,7 +106,7 @@ const CATEGORIES = {
     },
     {
       id: 'kej', name: '[반응형] KEJ 퍼블리싱', navName: 'KEJ', title: 'KEEP EVERY JOY',
-      story: "이름의 약자를 딴 AI 다이어리 앱 'KEJ'의 브랜드/다운로드 사이트입니다. 대화와 GPS 기반의 일상 기록, SNS 연동 기능을 담았고 커스터마이징 가능한 마스코트 캐릭터를 제작했습니다. 다이어리 감성에 맞춘 블랙 톤 화면 전체를 반응형으로 직접 퍼블리싱했습니다.",
+      story: "이름의 약자를 딴 AI 다이어리 앱 'KEJ'의 브랜드/다운로드 사이트입니다. 대화와 GPS 기반의 일상 기록, SNS 연동 기능을 담았고 커스터마이징 가능한 마스코트 캐릭터를 제작했습니다. 다이어리 감성에 맞춰 화면 전체를 블랙 톤으로 통일했습니다.",
       img: 'img/Work-Image/KEJ/KEJ main.png',
       mock: 'display',
       live: 'https://quincys2s2.github.io/KEJ/KEJ.html',
@@ -121,7 +121,7 @@ const CATEGORIES = {
     },
     {
       id: 'etc', name: '스타벅스 · 한국장학재단 리디자인', navName: '리디자인', title: 'REDESIGN',
-      story: '스타벅스는 브랜드 무드를 살린 UI 리디자인, 한국장학재단은 신뢰감을 주는 웹사이트 리디자인으로 진행했습니다. 두 작업 모두 퍼블리싱 없이 디자인 중심으로 진행했습니다.',
+      story: '스타벅스는 브랜드 무드를 살린 UI 리디자인, 한국장학재단은 신뢰감을 주는 웹사이트 리디자인으로 진행했습니다.',
       mock: 'duo',
       imgs: [
         { src: 'img/Work-Image/Starbucks/main.png', alt: '스타벅스 리디자인' },
