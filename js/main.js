@@ -3,6 +3,11 @@
 // 화면 전환 (ikoka 만들 때 쓰던 방식)
 
 function go(id) {
+  if (id !== 'screen-carousel') {
+    document.querySelectorAll('#screen-carousel video').forEach(function (video) {
+      video.pause();
+    });
+  }
   document.querySelectorAll('.screen').forEach(function (screen) {
     screen.classList.remove('is-current');
   });
@@ -59,11 +64,11 @@ window.addEventListener('popstate', function (e) {
 // 첫 화면(홈) 기록
 try { history.replaceState({ screen: 'home' }, ''); } catch (err) { }
 
-// 01.png ~ NN.png 처럼 번호가 규칙적이라 반복문으로 경로 생성
-function pageList(prefix, count) {
+// 번호가 규칙적인 이미지 경로를 생성 (기본 두 자리)
+function pageList(prefix, count, digits) {
   var list = [];
   for (var i = 1; i <= count; i++) {
-    list.push(prefix + String(i).padStart(2, '0') + '.png');
+    list.push(prefix + String(i).padStart(digits || 2, '0') + '.png');
   }
   return list;
 }
@@ -233,6 +238,7 @@ const CATEGORIES = {
       // 폰에는 썸네일, 클릭 확대할 땐 원본(detail)
       detailThumb: 'img/Work-Image/Graphics/Detailed Product Design-thum.png',
       detail: 'img/Work-Image/Graphics/Detailed Product Design.png',
+      snsImgs: pageList('img/Work-Image/ikoka-sns/', 6, 1),
       live: null
     },
     {
@@ -263,11 +269,10 @@ const CATEGORIES = {
     },
     {
       id: 'g-video', name: '영상 편집', title: 'VIDEO',
-      story: 'AI 생성 소스를 직접 편집해 완성한 영상 작업입니다. 오른쪽 썸네일을 클릭하면 유튜브 영상이 재생됩니다.',
+      story: 'AI 생성 소스를 편집한 가로 영상과 IKOKA 홍보 쇼츠입니다. 오른쪽 폰에서 세로 영상을 재생할 수 있습니다.',
       mock: 'video',
       video: 'img/video/ai video.mp4',
-      // 유튜브는 클릭하면 그 자리에서 iframe으로 바뀌어 재생됨
-      youtube: ['JSoDJxQpp5s', 'LdQsBGDYrRA'],
+      shortVideo: 'img/video/ikoka-short.mp4',
       live: null
     },
     {
@@ -288,14 +293,6 @@ const CATEGORIES = {
     }
   ]
 };
-
-// 유튜브 썸네일 마크업. 이미지는 유튜브가 자동으로 제공하는 걸 그대로 씀
-function ytThumbHTML(id) {
-  return (
-    '<img src="https://img.youtube.com/vi/' + id + '/hqdefault.jpg" alt="유튜브 영상 썸네일">' +
-    '<span class="yt-play" aria-hidden="true">&#9654;</span>'
-  );
-}
 
 // 모니터 목업 한 대 분량 마크업
 function displayInner(src, alt) {
@@ -334,21 +331,20 @@ function heroHTML(p) {
     );
   }
 
-  // 영상. mp4는 슬라이드가 보일 때만 재생 (syncProjectColor에서 제어)
+  // 가로 영상과 IKOKA 세로 쇼츠
   if (p.mock === 'video') {
-    var side = '';
-    if (p.youtube) {
-      side =
-        '<div class="video-side">' +
-          p.youtube.map(function (id) {
-            return '<button type="button" class="yt-thumb" data-yt="' + id + '">' + ytThumbHTML(id) + '</button>';
-          }).join('') +
-        '</div>';
-    }
     return (
       '<div class="slide-hero slide-hero-video">' +
         '<video class="slide-video" src="' + p.video + '" controls muted loop playsinline preload="metadata"></video>' +
-        side +
+        '<div class="video-vertical">' +
+          '<div class="mockup video-phone">' +
+            '<div class="mockup-viewport mockup-viewport-iphone">' +
+              '<video class="short-video" src="' + p.shortVideo + '" poster="img/Work-Image/ikoka-sns/1.png" controls playsinline preload="metadata" aria-label="IKOKA 홍보 쇼츠"></video>' +
+            '</div>' +
+            '<img class="mockup-frame" src="img/mockup/Apple iPhone 15 Pro Black Titanium 1.png" alt="" aria-hidden="true">' +
+          '</div>' +
+          '<span class="video-caption">IKOKA · SHORTS</span>' +
+        '</div>' +
       '</div>'
     );
   }
@@ -368,6 +364,35 @@ function heroHTML(p) {
           '</div>' +
           '<img class="mockup-frame" src="img/mockup/Apple iPhone 15 Pro Black Titanium 1.png" alt="" aria-hidden="true">' +
         '</div>';
+    }
+
+    if (p.snsImgs) {
+      return (
+        '<div class="slide-hero slide-hero-package">' +
+          '<div class="package-tabs" role="group" aria-label="그래픽 작업 종류">' +
+            '<button type="button" class="package-tab is-active" aria-pressed="true" data-view="package">제품 패키지</button>' +
+            '<button type="button" class="package-tab" aria-pressed="false" data-view="social">IKOKA SNS 광고</button>' +
+          '</div>' +
+          '<div class="package-panel" data-panel="package">' +
+            '<div class="slide-hero-gallery">' + items + '</div>' +
+          '</div>' +
+          '<div class="package-panel" data-panel="social" hidden>' +
+            '<div class="sns-showcase" data-card-index="0">' +
+              '<img class="sns-peek sns-peek-prev" alt="" aria-hidden="true" hidden>' +
+              '<div class="sns-post">' +
+                '<div class="sns-post-head"><span class="sns-avatar">i</span><span>ikoka <small>INSTAGRAM POST</small></span><span class="sns-menu" aria-hidden="true">···</span></div>' +
+                '<img class="sns-post-image" src="' + p.snsImgs[0] + '" alt="IKOKA SNS 홍보 이미지 1 / 6">' +
+                '<div class="sns-post-foot"><span>IKOKA · 일본 여행 홍보 콘텐츠</span><span class="sns-count">1 / 6</span></div>' +
+              '</div>' +
+              '<img class="sns-peek sns-peek-next" src="' + p.snsImgs[1] + '" alt="" aria-hidden="true">' +
+              '<div class="sns-controls">' +
+                '<button type="button" class="sns-arrow" data-step="-1" aria-label="이전 카드" disabled>←</button>' +
+                '<button type="button" class="sns-arrow" data-step="1" aria-label="다음 카드">→</button>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>'
+      );
     }
 
     return '<div class="slide-hero slide-hero-gallery">' + items + '</div>';
@@ -642,20 +667,60 @@ function closeLightbox(fromHistory) {
   if (!fromHistory) { try { history.back(); } catch (err) { } }
 }
 
-// 유튜브 썸네일 클릭 -> 그 자리에서 iframe으로 교체해 재생 (이벤트 위임)
+// 패키지 슬라이드에서 기존 작업과 IKOKA SNS 작업 전환
 document.getElementById('carousel-wrapper').addEventListener('click', function (e) {
-  var btn = e.target.closest('.yt-thumb');
-  if (!btn || btn.querySelector('iframe')) return;
-  // referrerpolicy : 유튜브가 출처(Referer) 없는 임베드를 오류 153으로 거부해서 명시
-  btn.innerHTML =
-    '<iframe src="https://www.youtube.com/embed/' + btn.dataset.yt + '?autoplay=1&rel=0"' +
-    ' title="유튜브 영상" allow="autoplay; encrypted-media; fullscreen" allowfullscreen' +
-    ' referrerpolicy="strict-origin-when-cross-origin"></iframe>';
+  var tab = e.target.closest('.package-tab');
+  if (!tab) return;
+
+  var hero = tab.closest('.slide-hero-package');
+  var slide = tab.closest('.slide');
+  var isSocial = tab.dataset.view === 'social';
+  hero.querySelectorAll('.package-tab').forEach(function (item) {
+    var selected = item === tab;
+    item.classList.toggle('is-active', selected);
+    item.setAttribute('aria-pressed', selected ? 'true' : 'false');
+  });
+  hero.querySelectorAll('.package-panel').forEach(function (panel) {
+    panel.hidden = panel.dataset.panel !== tab.dataset.view;
+  });
+
+  var project = CATEGORIES.graphic.find(function (item) { return item.id === 'g-package'; });
+  slide.querySelector('.slide-title').textContent = isSocial ? 'SOCIAL' : project.title;
+  slide.querySelector('.slide-name').textContent = isSocial ? 'IKOKA SNS 광고' : project.name;
+  slide.querySelector('.slide-story').textContent = isSocial
+    ? '일본 여행 서비스 IKOKA의 인스타그램 홍보 이미지 6장입니다. 화살표로 넘기고 이미지를 클릭하면 크게 볼 수 있습니다.'
+    : project.story;
+});
+
+// 카드뉴스 원본 비율을 유지하면서 한 장씩 넘김
+document.getElementById('carousel-wrapper').addEventListener('click', function (e) {
+  var arrow = e.target.closest('.sns-arrow');
+  if (!arrow) return;
+
+  var showcase = arrow.closest('.sns-showcase');
+  var images = CATEGORIES.graphic.find(function (item) { return item.id === 'g-package'; }).snsImgs;
+  var index = Number(showcase.dataset.cardIndex) + Number(arrow.dataset.step);
+  if (index < 0 || index >= images.length) return;
+
+  showcase.dataset.cardIndex = index;
+  var current = showcase.querySelector('.sns-post-image');
+  current.src = images[index];
+  current.alt = 'IKOKA SNS 홍보 이미지 ' + (index + 1) + ' / ' + images.length;
+  showcase.querySelector('.sns-count').textContent = (index + 1) + ' / ' + images.length;
+
+  var prev = showcase.querySelector('.sns-peek-prev');
+  var next = showcase.querySelector('.sns-peek-next');
+  prev.hidden = index === 0;
+  next.hidden = index === images.length - 1;
+  if (!prev.hidden) prev.src = images[index - 1];
+  if (!next.hidden) next.src = images[index + 1];
+  showcase.querySelector('[data-step="-1"]').disabled = index === 0;
+  showcase.querySelector('[data-step="1"]').disabled = index === images.length - 1;
 });
 
 // 그래픽 이미지 클릭 -> 라이트박스 (이벤트 위임)
 document.getElementById('carousel-wrapper').addEventListener('click', function (e) {
-  var img = e.target.closest('.slide-hero-gallery img, .slide-hero-grid img, .marquee img');
+  var img = e.target.closest('.slide-hero-gallery img, .slide-hero-grid img, .marquee img, .sns-post-image');
   if (!img) return;
   // 프레임을 클릭했으면 안에 든 화면 이미지로 (넘김 중이면 지금 보이는 장)
   var page = img.classList.contains('mockup-frame')
@@ -713,20 +778,17 @@ function syncProjectColor(swiper) {
     btn.classList.toggle('is-active', Number(btn.dataset.index) === swiper.activeIndex);
   });
 
-  // 등장 모션 트리거 + 영상은 보이는 슬라이드에서만 재생
+  // 등장 모션 트리거 + 가로 영상만 자동 재생, 쇼츠는 직접 재생
   swiper.slides.forEach(function (slide, i) {
     slide.classList.toggle('is-active', i === swiper.activeIndex);
-    var video = slide.querySelector('video');
-    if (video) {
-      if (i === swiper.activeIndex) video.play().catch(function () { });
-      else video.pause();
+    var mainVideo = slide.querySelector('.slide-video');
+    if (mainVideo) {
+      if (i === swiper.activeIndex) mainVideo.play().catch(function () { });
+      else mainVideo.pause();
     }
-    // 떠난 슬라이드에서 재생 중이던 유튜브는 썸네일로 되돌림 (정지 효과)
     if (i !== swiper.activeIndex) {
-      slide.querySelectorAll('.yt-thumb iframe').forEach(function (iframe) {
-        var btn = iframe.closest('.yt-thumb');
-        btn.innerHTML = ytThumbHTML(btn.dataset.yt);
-      });
+      var shortVideo = slide.querySelector('.short-video');
+      if (shortVideo) shortVideo.pause();
     }
   });
 
