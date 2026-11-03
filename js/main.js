@@ -262,7 +262,9 @@ const CATEGORIES = {
           'img/Work-Image/Graphics/Vertical banner ad 02.png',
           'img/Work-Image/Graphics/Vertical banner ad 03.png',
           'img/Work-Image/Graphics/Vertical banner ad 04.png',
-          'img/Work-Image/Graphics/Vertical banner ad 05.png'
+          'img/Work-Image/Graphics/Vertical banner ad 05.png',
+          'img/Work-Image/Graphics/Olive Young square banner.png',
+          'img/Work-Image/Graphics/Danawa vertical banner.png'
         ]
       ],
       live: null
